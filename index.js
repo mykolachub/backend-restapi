@@ -4,15 +4,20 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 
+const userRouter = require('./src/routes/userRouter');
+
 const server = express();
 
 // Middlewares
 server.use(express.json());
 server.use(morgan('dev'));
 
-server.get('/', (req, res) => {
-  res.status(200).json({
-    status: 'success',
+server.use('/api/v1/users', userRouter);
+
+server.all('*', (req, res) => {
+  res.status(404).json({
+    status: 'fail',
+    message: 'There is no such endpoint..',
     data: null,
   });
 });
