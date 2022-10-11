@@ -1,30 +1,30 @@
 'use strict';
 
-const { records } = require('../data/db');
+const { categories } = require('../data/db');
 
 const getAllCategories = (req, res) => {
   res.status(200).json({
     status: 'success',
     message: null,
-    results: records.length,
+    results: categories.length,
     data: {
-      records,
+      categories,
     },
   });
 };
 
 const createCategory = (req, res) => {
-  const record = {
-    id: 'record-' + Date.now(),
+  const category = {
+    id: 'category-' + Date.now(),
     name: req.body.name,
   };
-  records.push(record);
+  categories.push(category);
 
   res.status(200).json({
     status: 'success',
     message: 'Category successfully created',
     data: {
-      record,
+      categories,
     },
   });
 };

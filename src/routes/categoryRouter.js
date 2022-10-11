@@ -6,7 +6,7 @@ const categoryController = require('../controllers/categoryController');
 
 /**
  *
- * /api/v1/records
+ * /api/v1/categories
  *
  */
 
