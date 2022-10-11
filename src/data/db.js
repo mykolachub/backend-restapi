@@ -3,7 +3,7 @@
 // Database Imitation
 const data = {
   users: [],
-  category: [],
+  categories: [],
   records: [],
 };
 
