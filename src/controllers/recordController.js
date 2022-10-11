@@ -3,12 +3,19 @@
 const { records } = require('../data/db');
 
 const getAllRecords = (req, res) => {
+  let recs = [...records];
+
+  // Filter: /api/v1/records?userId=...&caterodyId=...
+  for (const key of Object.keys(req.query)) {
+    recs = recs.filter((r) => r[key] === req.query[key]);
+  }
+
   res.status(200).json({
     status: 'success',
     message: null,
-    results: records.length,
+    results: recs.length,
     data: {
-      records,
+      records: recs,
     },
   });
 };
