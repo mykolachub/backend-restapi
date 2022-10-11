@@ -1,0 +1,29 @@
+{
+  "name": "backend-restapi",
+  "version": "1.0.0",
+  "description": "Assignment: Create basic rest api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "lint": "eslint . --fix && prettier --write \"**/*.js\" \"**/*.json\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikolaichub/backend-restapi.git"
+  },
+  "keywords": [],
+  "author": "Nikolai Chub <nikolaichub.me@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikolaichub/backend-restapi/issues"
+  },
+  "homepage": "https://github.com/nikolaichub/backend-restapi#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
+  }
+}
