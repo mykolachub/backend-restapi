@@ -18,7 +18,6 @@ const createUser = (req, res) => {
     id: 'user-' + Date.now(),
     name: req.body.name,
   };
-
   users.push(user);
 
   res.status(201).json({
