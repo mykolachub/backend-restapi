@@ -16,6 +16,7 @@ class AppError {
     const types = {
       SequelizeValidationError: this.handleValidationError,
       SequelizeUniqueConstraintError: this.handleUniqueConstraintError,
+      SequelizeForeignKeyConstraintError: this.handleForeignKeyConstraintError,
     };
 
     const handler = types[this.name] ?? this.unknownError;
@@ -55,6 +56,24 @@ class AppError {
         status: 'fail',
         type: 'UniqueConstraintError',
         message: messages.join(', '),
+      },
+      code: this.statuscode,
+    };
+  }
+
+  // SequelizeForeignKeyConstraintError
+  handleForeignKeyConstraintError() {
+    const { constraint } = this.error.parent;
+    const leftUnderscore = constraint.indexOf('_') + 1;
+    const rightUnderscore = constraint.lastIndexOf('_');
+    const key = constraint.slice(leftUnderscore, rightUnderscore - 2);
+    this.statuscode = 409;
+
+    return {
+      message: {
+        status: 'fail',
+        type: 'ForeignKeyConstraintError',
+        message: `There is no such ${key}`,
       },
       code: this.statuscode,
     };
