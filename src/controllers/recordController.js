@@ -1,42 +1,50 @@
 'use strict';
 
-const { records } = require('../data/db');
+const { models } = require('../../db');
+const AppError = require('../helpers/error.helper');
 
-const getAllRecords = (req, res) => {
-  let recs = [...records];
+const getAllRecords = async (req, res) => {
+  try {
+    const { userId, categoryId } = req.query;
+    const filter = {};
 
-  // Filter: /api/v1/records?userId=...&caterodyId=...
-  for (const key of Object.keys(req.query)) {
-    recs = recs.filter((r) => r[key] === req.query[key]);
+    if (userId) filter.userId = userId;
+    if (categoryId) filter.categoryId = categoryId;
+
+    const records = await models.record.findAll({
+      where: filter,
+      include: [models.user, models.category],
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: null,
+      results: records.length,
+      data: {
+        records,
+      },
+    });
+  } catch (error) {
+    const { message, code } = AppError(error);
+    res.status(code).json(message);
   }
-
-  res.status(200).json({
-    status: 'success',
-    message: null,
-    results: recs.length,
-    data: {
-      records: recs,
-    },
-  });
 };
 
-const createRecord = (req, res) => {
-  const record = {
-    id: 'record-' + Date.now(),
-    userId: req.body.userId,
-    categoryId: req.body.categoryId,
-    createdAt: Date.now(),
-    price: req.body.price,
-  };
-  records.push(record);
-
-  res.status(201).json({
-    status: 'success',
-    message: 'Record created successfully',
-    data: {
-      record,
-    },
-  });
+const createRecord = async (req, res) => {
+  try {
+    const { userId, categoryId, price } = req.body;
+    const record = await models.record.create({ price, userId, categoryId });
+    res.status(201).json({
+      status: 'success',
+      message: 'Record created successfully',
+      data: {
+        record,
+      },
+    });
+  } catch (error) {
+    const { message, code } = AppError(error);
+    res.status(code).json(message);
+  }
 };
 
 module.exports = {
