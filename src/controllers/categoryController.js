@@ -1,11 +1,13 @@
 'use strict';
 
-const { categories } = require('../data/db');
+const { models } = require('../../db');
+const AppError = require('../helpers/error.helper');
 
-const getAllCategories = (req, res) => {
+const getAllCategories = async (req, res) => {
+  const categories = await models.category.findAll();
   res.status(200).json({
     status: 'success',
-    message: null,
+    message: 'Categories successfully returned',
     results: categories.length,
     data: {
       categories,
@@ -13,20 +15,21 @@ const getAllCategories = (req, res) => {
   });
 };
 
-const createCategory = (req, res) => {
-  const category = {
-    id: 'category-' + Date.now(),
-    name: req.body.name,
-  };
-  categories.push(category);
-
-  res.status(200).json({
-    status: 'success',
-    message: 'Category successfully created',
-    data: {
-      categories,
-    },
-  });
+const createCategory = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const category = await models.category.create({ name });
+    res.status(200).json({
+      status: 'success',
+      message: 'Category successfully created',
+      data: {
+        category,
+      },
+    });
+  } catch (error) {
+    const { message, code } = AppError(error);
+    res.status(code).json(message);
+  }
 };
 
 module.exports = {
