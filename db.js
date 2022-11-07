@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 const { Sequelize } = require('sequelize');
 
@@ -7,9 +8,12 @@ const path = require('node:path');
 
 const modelsPath = path.join(process.cwd(), './src/models');
 
+const { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST } =
+  process.env;
+
 // Connection
-const sequelize = new Sequelize('backend_restapi', 'postgres', 'root', {
-  host: 'localhost',
+const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
+  host: POSTGRES_HOST,
   dialect: 'postgres',
   logging: false,
 });
