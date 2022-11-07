@@ -1,11 +1,13 @@
 'use strict';
 
-const { users } = require('../data/db');
+const { models } = require('../../db');
+const AppError = require('../helpers/error.helper');
 
-const getAllUsers = (req, res) => {
+const getAllUsers = async (req, res) => {
+  const users = await models.user.findAll();
   res.status(200).json({
     status: 'success',
-    message: null,
+    message: 'Users successfully returned',
     results: users.length,
     data: {
       users,
@@ -13,20 +15,21 @@ const getAllUsers = (req, res) => {
   });
 };
 
-const createUser = (req, res) => {
-  const user = {
-    id: 'user-' + Date.now(),
-    name: req.body.name,
-  };
-  users.push(user);
-
-  res.status(201).json({
-    status: 'success',
-    message: 'User successfully created',
-    data: {
-      user,
-    },
-  });
+const createUser = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const user = await models.user.create({ name });
+    res.status(201).json({
+      status: 'success',
+      message: 'User successfully created',
+      data: {
+        user,
+      },
+    });
+  } catch (error) {
+    const { message, code } = AppError(error);
+    res.status(code).json(message);
+  }
 };
 
 module.exports = {
