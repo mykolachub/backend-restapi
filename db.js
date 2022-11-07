@@ -30,10 +30,18 @@ const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
     const { user, category, record } = sequelize.models;
 
     // Associations
-    user.hasOne(record);
+    user.hasOne(record, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
     record.belongsTo(user);
 
-    category.hasOne(record);
+    category.hasOne(record, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
     record.belongsTo(category);
 
     await sequelize.sync({ force: true });
