@@ -17,5 +17,12 @@ services:
 
 databases:
   - name: db-postgres
+    region: frankfurt
     plan: free
+    host: postgres
+    port: 5432
+    databas: backend_restapi
+    user: postgres
+    password: root
+    connectionString: postgres://postgres:root@postgres:5432/backend_restapi
     postgresMajorVersion: 14
