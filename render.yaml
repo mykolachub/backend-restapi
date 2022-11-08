@@ -20,5 +20,5 @@ databases:
     region: frankfurt
     plan: free
     databaseName: backend_restapi
-    user: postgres
+    user: postgresroot
     postgresMajorVersion: 15
