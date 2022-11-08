@@ -1,0 +1,19 @@
+services:
+  - type: web
+    env: node
+    name: api-node
+    repo: https://github.com/nikolaichub/backend-restapi.git
+    region: frankfurt
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: CONNECTION_STRING
+        fromDatabase:
+          name: db-postgres
+          property: connectionString
+
+databases:
+  - name: db-postgres
+    postgresMajorVersion: 14
