@@ -4,6 +4,7 @@ services:
     name: api-node
     repo: https://github.com/nikolaichub/backend-restapi.git
     region: frankfurt
+    plan: free
     buildCommand: npm ci
     startCommand: npm start
     envVars:
@@ -16,4 +17,5 @@ services:
 
 databases:
   - name: db-postgres
+    plan: free
     postgresMajorVersion: 14
