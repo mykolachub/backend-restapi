@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Assignment: Create basic rest api",
   "main": "index.js",
+  "engines": {
+    "node": "^16.14.2"
+  },
   "scripts": {
     "start": "nodemon index.js",
     "lint": "eslint . --fix && prettier --write \"**/*.js\" \"**/*.json\""
