@@ -8,15 +8,10 @@ const path = require('node:path');
 
 const modelsPath = path.join(process.cwd(), './src/models');
 
-const { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST } =
-  process.env;
+const { CONNECTION_STRING } = process.env;
 
 // Connection
-const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
-  host: POSTGRES_HOST,
-  dialect: 'postgres',
-  logging: false,
-});
+const sequelize = new Sequelize(CONNECTION_STRING, { logging: false });
 
 // Models registration
 (async () => {
