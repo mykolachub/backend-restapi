@@ -32,6 +32,9 @@ const sequelize = new Sequelize(CONNECTION_STRING, { logging: false });
     });
     record.belongsTo(user);
 
+    user.hasMany(category);
+    category.belongsTo(user);
+
     category.hasOne(record, {
       foreignKey: {
         allowNull: false,
