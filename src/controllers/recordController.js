@@ -1,6 +1,6 @@
 'use strict';
 
-const { models } = require('../../db');
+const { models } = require('../db');
 const AppError = require('../helpers/error.helper');
 
 const getAllRecords = async (req, res) => {

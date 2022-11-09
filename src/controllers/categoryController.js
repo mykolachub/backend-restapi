@@ -1,7 +1,7 @@
 'use strict';
 
 const { Op } = require('sequelize');
-const { models } = require('../../db');
+const { models } = require('../db');
 const AppError = require('../helpers/error.helper');
 
 const getAllCategories = async (req, res) => {

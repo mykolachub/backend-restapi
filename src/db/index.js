@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const { Sequelize } = require('sequelize');
+const associations = require('./associations');
 
 const { readdir } = require('node:fs/promises');
 const path = require('node:path');
@@ -22,25 +23,8 @@ const sequelize = new Sequelize(CONNECTION_STRING, { logging: false });
       require(modulePath)(sequelize);
     }
 
-    const { user, category, record } = sequelize.models;
-
-    // Associations
-    user.hasOne(record, {
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-    record.belongsTo(user);
-
-    user.hasMany(category);
-    category.belongsTo(user);
-
-    category.hasOne(record, {
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-    record.belongsTo(category);
+    // Associations between models
+    associations(sequelize);
 
     await sequelize.sync({ force: true });
   } catch (err) {
