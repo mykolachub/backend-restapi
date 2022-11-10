@@ -22,7 +22,7 @@ tag: [v1.0.0](https://github.com/nikolaichub/backend-restapi/tree/v1.0.0) , depl
 #### Part 2 "Валідація, обробка помилок, ORM"
 
 Варіант 2: Користувацькі категорії витрат <br>
-tag: [v2.0.0](#) , deployed at Render [here](https://api-node-pefe.onrender.com/)
+tag: [v2.0.0](https://github.com/nikolaichub/backend-restapi/tree/v2.0.0) , deployed at Render [here](https://api-node-pefe.onrender.com/)
 
 ## Deploy
 
