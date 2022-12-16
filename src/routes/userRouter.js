@@ -18,4 +18,6 @@ userRouter
   .get(authController.protect, userController.getAllUsers)
   .post(authController.protect, userController.createUser);
 
+userRouter.get('/me', authController.protect, userController.getMe);
+
 module.exports = userRouter;
