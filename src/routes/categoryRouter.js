@@ -3,6 +3,7 @@
 const express = require('express');
 
 const categoryController = require('../controllers/categoryController');
+const authController = require('../controllers/authController');
 
 /**
  *
@@ -14,7 +15,7 @@ const categoryRouter = express.Router();
 
 categoryRouter
   .route('/')
-  .get(categoryController.getAllCategories)
-  .post(categoryController.createCategory);
+  .get(authController.protect, categoryController.getAllCategories)
+  .post(authController.protect, categoryController.createCategory);
 
 module.exports = categoryRouter;

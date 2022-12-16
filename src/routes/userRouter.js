@@ -3,6 +3,7 @@
 const express = require('express');
 
 const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 
 /**
  *
@@ -14,7 +15,7 @@ const userRouter = express.Router();
 
 userRouter
   .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .get(authController.protect, userController.getAllUsers)
+  .post(authController.protect, userController.createUser);
 
 module.exports = userRouter;

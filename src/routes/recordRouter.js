@@ -3,6 +3,7 @@
 const express = require('express');
 
 const recordController = require('../controllers/recordController');
+const authController = require('../controllers/authController');
 
 /**
  *
@@ -14,7 +15,7 @@ const recordRouter = express.Router();
 
 recordRouter
   .route('/')
-  .get(recordController.getAllRecords)
-  .post(recordController.createRecord);
+  .get(authController.protect, recordController.getAllRecords)
+  .post(authController.protect, recordController.createRecord);
 
 module.exports = recordRouter;
