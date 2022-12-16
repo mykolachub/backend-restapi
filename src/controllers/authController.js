@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const { models } = require('../db');
-// const AppError = require('../helpers/error.helper');
 
 const BCRYPT_SALT = 12;
 
@@ -18,7 +17,8 @@ const login = async (req, res) => {
     });
 
   // Check if user exists and passwords are correct
-  const user = await models.user.findOne({ name });
+  const user = await models.user.findOne({ where: { name } });
+  console.log(user);
   if (!user || !(await bcrypt.compare(password, user.password)))
     return res.status(401).json({
       status: 'fail',
@@ -26,7 +26,7 @@ const login = async (req, res) => {
     });
 
   // Send token
-  const token = jwt.sign({ name: req.body.name }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ name }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
@@ -38,7 +38,9 @@ const login = async (req, res) => {
 
 const signup = async (req, res) => {
   // Check if user already exists
-  const user = await models.user.findOne({ name: req.body.name });
+  const { name, password } = req.body;
+  const user = await models.user.findOne({ where: { name } });
+  console.log(user);
   if (user)
     return res.status(400).json({
       status: 'fail',
@@ -46,15 +48,14 @@ const signup = async (req, res) => {
     });
 
   // Create new user
-  const passwordHashed = await bcrypt.hash(req.body.password, BCRYPT_SALT);
-  console.log(passwordHashed);
+  const passwordHashed = await bcrypt.hash(password, BCRYPT_SALT);
   const newUser = await models.user.create({
-    name: req.body.name,
+    name,
     password: passwordHashed,
   });
 
   // Send token
-  const token = jwt.sign({ name: req.body.name }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ name }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
