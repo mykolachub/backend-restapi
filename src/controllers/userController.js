@@ -15,6 +15,15 @@ const getAllUsers = async (req, res) => {
   });
 };
 
+const getMe = async (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: req.user,
+    },
+  });
+};
+
 const createUser = async (req, res) => {
   try {
     const { name } = req.body;
@@ -35,4 +44,5 @@ const createUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   createUser,
+  getMe,
 };
