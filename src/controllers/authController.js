@@ -86,28 +86,33 @@ const signup = async (req, res) => {
 
 // Middleware for protecting endpoints
 const protect = async (req, res, next) => {
-  // Getting token
-  const { authorization: auth } = req.headers;
-  const token = auth && auth.startsWith('Bearer') ? auth.split(' ')[1] : null;
-  if (!token)
-    return res.status(401).json({
-      status: 'fail',
-      message: 'You are not logged in',
-    });
+  try {
+    // Getting token
+    const { authorization: auth } = req.headers;
+    const token = auth && auth.startsWith('Bearer') ? auth.split(' ')[1] : null;
+    if (!token)
+      return res.status(401).json({
+        status: 'fail',
+        message: 'You are not logged in',
+      });
 
-  // Token validation
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Token validation
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  // If user still exists
-  const user = await models.user.findOne({ where: { name: decoded.name } });
-  if (!user)
-    return res.status(401).json({
-      status: 'fail',
-      message: 'User doen not exist already',
-    });
+    // If user still exists
+    const user = await models.user.findOne({ where: { name: decoded.name } });
+    if (!user)
+      return res.status(401).json({
+        status: 'fail',
+        message: 'User doen not exist already',
+      });
 
-  req.user = user;
-  next();
+    req.user = user;
+    next();
+  } catch (error) {
+    const { message, code } = AppError(error);
+    res.status(code).json(message);
+  }
 };
 
 module.exports = {
