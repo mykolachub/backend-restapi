@@ -17,6 +17,7 @@ class AppError {
       SequelizeValidationError: this.handleValidationError,
       SequelizeUniqueConstraintError: this.handleUniqueConstraintError,
       SequelizeForeignKeyConstraintError: this.handleForeignKeyConstraintError,
+      TokenExpiredError: this.hanndleTokenExpiredError,
     };
 
     const handler = types[this.name] ?? this.unknownError;
@@ -76,6 +77,18 @@ class AppError {
         message: `There is no such ${key}`,
       },
       code: this.statuscode,
+    };
+  }
+
+  // TokenExpiredError
+  hanndleTokenExpiredError() {
+    return {
+      message: {
+        status: 'fail',
+        type: 'TokenExpiredError',
+        message: 'Session expired. Please log in again',
+      },
+      code: 401,
     };
   }
 
