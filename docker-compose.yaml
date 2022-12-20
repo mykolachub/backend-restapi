@@ -11,6 +11,8 @@ services:
     environment:
       PORT: 8080
       CONNECTION_STRING: postgres://postgres:root@postgres/backend_restapi
+      JWT_SECRET: 7b8800a692ec26266a8d1d228369e1ae8b785685302f16b17baf7740e04d73712bc5f02722876238461462ed46989c58aca6bc245c016603ccd300b78ba45896
+      JWT_EXPIRES_IN: 1d
     ports:
       - '8080:8080'
     restart: always
