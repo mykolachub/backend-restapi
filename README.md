@@ -17,12 +17,16 @@ Technology stack: Node.js (Express), Sequelize (PostgreSQL).
 
 #### Part 1 "Розробка базового REST API"
 
-tag: [v1.0.0](https://github.com/nikolaichub/backend-restapi/tree/v1.0.0) , deployed at Heroku [here](https://backend-restapi-docker.herokuapp.com/).
+tag: [v1.0.0](https://github.com/nikolaichub/backend-restapi/tree/v1.0.0), deployed at Heroku [here](https://backend-restapi-docker.herokuapp.com/).
 
 #### Part 2 "Валідація, обробка помилок, ORM"
 
 Варіант 2: Користувацькі категорії витрат <br>
-tag: [v2.0.0](https://github.com/nikolaichub/backend-restapi/tree/v2.0.0) , deployed at Render [here](https://api-node-pefe.onrender.com/)
+tag: [v2.0.0](https://github.com/nikolaichub/backend-restapi/tree/v2.0.0), deployed at Render [here](https://api-node-pefe.onrender.com/)
+
+#### Part 3 "Аутентифікація"
+
+tag: [v3.0.0](https://github.com/nikolaichub/backend-restapi/tree/v3.0.0), deployed at Render [here](https://api-node-pefe.onrender.com/)
 
 ## Deploy
 
@@ -64,6 +68,8 @@ $ npm start
 - [/api/v1/categories](#create-category) `POST` for creating new categories
 - [/api/v1/records](#get-all-records) `GET` for getting records
 - [/api/v1/records](#create-record) `POST` for creating new records
+- [/api/v1/auth/signup](#sign-up) `POST` for creating account and signing up
+- [/api/v1/auth/login](#login) `POST` for loggin in account and creating jwt token
 
 #### Get all users
 
@@ -76,6 +82,10 @@ Returns json data about a single user.
 - **Method:**
 
   `GET`
+
+- **Headers**
+
+  `Authorization: Bearer <JWT Token>`
 
 - **URL Params**
 
@@ -113,6 +123,10 @@ Returns json data about a single user.
 
   `POST`
 
+- **Headers**
+
+  `Authorization: Bearer <JWT Token>`
+
 - **URL Params**
 
   None
@@ -149,6 +163,10 @@ Returns json data about a single user.
 - **Method:**
 
   `GET`
+
+- **Headers**
+
+`Authorization: Bearer <JWT Token>`
 
 - **URL Params**
 
@@ -189,6 +207,10 @@ Returns json data about a single user.
 
   `POST`
 
+- **Headers**
+
+  `Authorization: Bearer <JWT Token>`
+
 - **URL Params**
 
   None
@@ -227,6 +249,10 @@ Returns json data about a single user.
 - **Method:**
 
   `GET`
+
+- **Headers**
+
+  `Authorization: Bearer <JWT Token>`
 
 - **URL Params**
 
@@ -280,6 +306,10 @@ Returns json data about a single user.
 
   `POST`
 
+- **Headers**
+
+  `Authorization: Bearer <JWT Token>`
+
 - **URL Params**
 
   None
@@ -310,5 +340,78 @@ Returns json data about a single user.
         "createdAt": "2022-11-10T19:15:17.311Z"
       }
     }
+  }
+  ```
+
+#### Sign Up
+
+- **URL**
+
+  `/api/v1/auth/signup`
+
+- **Method:**
+
+  `POST`
+
+- **URL Params**
+
+  None
+
+- **Data Params**
+
+  ```json
+  {
+    // example
+    "name": "Nikolai",
+    "password": "supasafepassword"
+  }
+  ```
+
+- **Example of the result**
+
+  ```json
+  {
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi0JAg0YXRgtC-INGG0LUg0LIg0L3QsNGBINGC0LDQutC40Lkg0LTQvtC_0LjRgtC70LjQstC40Lk_IiwiaWF0IjoxNjcxNTgwNDU1LCJleHAiOjE2NzE1ODA0NjV9.Vv1-MLO-sNrN04PNeKjYoCO2dH3iX5SJjAw68M6p51c",
+    "data": {
+      "user": {
+        "id": 1,
+        "name": "Nikolai",
+        "password": "$2b$12$XkiigBosb/Wx1MHEpAd3kujc4lKjkBkG5vbBpZ1V/2Oq0mw0G20o2"
+      }
+    }
+  }
+  ```
+
+#### Login
+
+- **URL**
+
+  `/api/v1/auth/login`
+
+- **Method:**
+
+  `POST`
+
+- **URL Params**
+
+  None
+
+- **Data Params**
+
+  ```json
+  {
+    // example
+    "name": "Nikolai",
+    "password": "supasafepassword"
+  }
+  ```
+
+- **Example of the result**
+
+  ```json
+  {
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi0JAg0YXRgtC-INGG0LUg0LIg0L3QsNGBINGC0LDQutC40Lkg0LTQvtC_0LjRgtC70LjQstC40Lk_IiwiaWF0IjoxNjcxNTgwNDU1LCJleHAiOjE2NzE1ODA0NjV9.Vv1-MLO-sNrN04PNeKjYoCO2dH3iX5SJjAw68M6p51c"
   }
   ```
